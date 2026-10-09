@@ -63,9 +63,9 @@ public final class CivRailsStatusOverlay {
                     int x = (screenWidth - Math.round(boxWidth * SCALE)) / 2;
                     int y = TOP_MARGIN;
 
-                    graphics.pose().pushPose();
-                    graphics.pose().translate(x, y, 0);
-                    graphics.pose().scale(SCALE, SCALE, 1.0f);
+                    graphics.pose().pushMatrix();
+                    graphics.pose().translate((float) x, (float) y);
+                    graphics.pose().scale(SCALE, SCALE);
 
                     graphics.fill(
                             0,
@@ -83,7 +83,7 @@ public final class CivRailsStatusOverlay {
                             false
                     );
 
-                    graphics.pose().popPose();
+                    graphics.pose().popMatrix();
                 }
         );
     }
