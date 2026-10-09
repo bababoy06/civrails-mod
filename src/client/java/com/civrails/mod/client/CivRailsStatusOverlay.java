@@ -7,7 +7,7 @@ import net.minecraft.client.gui.GuiGraphics;
 
 public final class CivRailsStatusOverlay {
 
-    private static final int HORIZONTAL_PADDING = 5;
+    private static final int HORIZONTAL_PADDING = 2;
     private static final int VERTICAL_PADDING = 2;
     private static final int TOP_MARGIN = 2;
     private static final int CORNER_RADIUS = 3;
