@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft;
 
 public final class HeartbeatManager {
 
-    private static final long HEARTBEAT_INTERVAL_MS = 30_000;
+    private static final long HEARTBEAT_INTERVAL_MS = 10_000;
 
     private static long lastHeartbeat = 0;
 
