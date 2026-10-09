@@ -5,7 +5,7 @@
 For setup instructions, please see the [Fabric Documentation page](https://docs.fabricmc.net/develop/getting-started/creating-a-project#setting-up) related to the IDE that you are using.
 
 ## Installation
-
+[Fabric Documentation page](https://github.com/bababoy06/civrails-mod/releases)
 
 ## License
 
