@@ -6,9 +6,10 @@ import net.minecraft.client.Minecraft;
 
 public final class CivRailsStatusOverlay {
 
-    private static final int HORIZONTAL_PADDING = 7;
-    private static final int VERTICAL_PADDING = 4;
-    private static final int TOP_MARGIN = 8;
+    private static final int HORIZONTAL_PADDING = 5;
+    private static final int VERTICAL_PADDING = 2;
+    private static final int TOP_MARGIN = 12;
+    private static final float SCALE = 0.9f;
 
     private CivRailsStatusOverlay() {
     }
@@ -58,24 +59,31 @@ public final class CivRailsStatusOverlay {
                     int textWidth = client.font.width(label);
                     int boxWidth = textWidth + HORIZONTAL_PADDING * 2;
                     int boxHeight = client.font.lineHeight + VERTICAL_PADDING * 2;
-                    int x = (client.getWindow().getGuiScaledWidth() - boxWidth) / 2;
+                    int screenWidth = client.getWindow().getGuiScaledWidth();
+                    int x = (screenWidth - Math.round(boxWidth * SCALE)) / 2;
                     int y = TOP_MARGIN;
 
+                    graphics.pose().pushPose();
+                    graphics.pose().translate(x, y, 0);
+                    graphics.pose().scale(SCALE, SCALE, 1.0f);
+
                     graphics.fill(
-                            x,
-                            y,
-                            x + boxWidth,
-                            y + boxHeight,
+                            0,
+                            0,
+                            boxWidth,
+                            boxHeight,
                             0xA0000000
                     );
                     graphics.drawString(
                             client.font,
                             label,
-                            x + HORIZONTAL_PADDING,
-                            y + VERTICAL_PADDING,
+                            HORIZONTAL_PADDING,
+                            VERTICAL_PADDING,
                             textColor,
                             false
                     );
+
+                    graphics.pose().popPose();
                 }
         );
     }
