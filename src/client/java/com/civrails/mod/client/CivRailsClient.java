@@ -9,23 +9,25 @@ import com.civrails.mod.auth.LinkManager;
 
 public class CivRailsClient implements ClientModInitializer {
 
-	private static final Logger LOGGER =
-			LoggerFactory.getLogger("civrails");
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger("civrails");
 
-	@Override
-	public void onInitializeClient() {
-		LOGGER.info("CivRails CLIENT initializer loaded!");
+    @Override
+    public void onInitializeClient() {
+        LOGGER.info("CivRails CLIENT initializer loaded!");
 
-		LinkManager.load();
+        LinkManager.load();
 
-		CivLinkCommand.register();
+        CivLinkCommand.register();
+        CivRailsStatusOverlay.register();
 
-		LOGGER.info("CivRails /civlink command registered!");
+        LOGGER.info("CivRails /civlink command registered!");
+        LOGGER.info("CivRails status overlay registered!");
 
-		ClientTickEvents.END_CLIENT_TICK.register(
-				client -> HeartbeatManager.tick()
-		);
+        ClientTickEvents.END_CLIENT_TICK.register(
+                client -> HeartbeatManager.tick()
+        );
 
-		LOGGER.info("CivRails heartbeat manager registered!");
-	}
+        LOGGER.info("CivRails heartbeat manager registered!");
+    }
 }
