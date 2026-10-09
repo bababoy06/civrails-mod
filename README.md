@@ -5,7 +5,7 @@
 For setup instructions, please see the [Fabric Documentation page](https://docs.fabricmc.net/develop/getting-started/creating-a-project#setting-up) related to the IDE that you are using.
 
 ## Installation
-Step #1 Download the latest jar file from our [Releases Page](https://github.com/bababoy06/civrails-mod/releases) and place it in your minecraft mod folder.
+Step #1 Download the latest civrails-x.x.x.jar file from our [Releases Page](https://github.com/bababoy06/civrails-mod/releases) and place it in your minecraft mod folder.
 
 Step #2 Be sure you are using minecraft java edition version 1.21.11
 
