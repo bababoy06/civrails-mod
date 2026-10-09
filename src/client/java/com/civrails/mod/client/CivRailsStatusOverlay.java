@@ -3,12 +3,14 @@ package com.civrails.mod.client;
 import com.civrails.mod.CivRails;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 
 public final class CivRailsStatusOverlay {
 
     private static final int HORIZONTAL_PADDING = 5;
     private static final int VERTICAL_PADDING = 2;
-    private static final int TOP_MARGIN = 12;
+    private static final int TOP_MARGIN = 5;
+    private static final int CORNER_RADIUS = 3;
     private static final float SCALE = 0.9f;
 
     private CivRailsStatusOverlay() {
@@ -67,13 +69,16 @@ public final class CivRailsStatusOverlay {
                     graphics.pose().translate((float) x, (float) y);
                     graphics.pose().scale(SCALE, SCALE);
 
-                    graphics.fill(
+                    drawRoundedBackground(
+                            graphics,
                             0,
                             0,
                             boxWidth,
                             boxHeight,
+                            CORNER_RADIUS,
                             0xA0000000
                     );
+
                     graphics.drawString(
                             client.font,
                             label,
@@ -86,5 +91,37 @@ public final class CivRailsStatusOverlay {
                     graphics.pose().popMatrix();
                 }
         );
+    }
+
+    private static void drawRoundedBackground(
+            GuiGraphics graphics,
+            int x,
+            int y,
+            int width,
+            int height,
+            int radius,
+            int color
+    ) {
+        int actualRadius = Math.min(radius, Math.min(width / 2, height / 2));
+
+        // Draw horizontal strips with progressively smaller ends to create
+        // pixel-style rounded corners without textures or extra dependencies.
+        for (int row = 0; row < height; row++) {
+            int inset = 0;
+
+            if (row < actualRadius) {
+                inset = actualRadius - row;
+            } else if (row >= height - actualRadius) {
+                inset = actualRadius - (height - 1 - row);
+            }
+
+            graphics.fill(
+                    x + inset,
+                    y + row,
+                    x + width - inset,
+                    y + row + 1,
+                    color
+            );
+        }
     }
 }
