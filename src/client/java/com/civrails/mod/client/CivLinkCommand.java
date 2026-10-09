@@ -37,11 +37,7 @@ public final class CivLinkCommand {
                                         String minecraftUuid =
                                                 client.player.getUUID().toString();
 
-                                        client.gui.getChat().addMessage(
-                                                Component.literal(
-                                                        "Verifying CivRails link..."
-                                                )
-                                        );
+                                        sendMessage("Verifying CivRails link...");
 
                                         Thread.startVirtualThread(() -> {
                                             try {
@@ -74,6 +70,23 @@ public final class CivLinkCommand {
                                             }
                                         });
 
+                                        return 1;
+                                    })
+                            )
+                            .then(literal("status")
+                                    .executes(context -> {
+                                        switch (HeartbeatManager.getConnectionStatus()) {
+                                            case NOT_LINKED ->
+                                                    sendMessage("CivRails: Not linked. Use /civlink <code> to link your account.");
+                                            case WAITING ->
+                                                    sendMessage("CivRails: Linked locally; waiting for the first API heartbeat.");
+                                            case CONNECTING ->
+                                                    sendMessage("CivRails: Linked; checking API connection...");
+                                            case CONNECTED ->
+                                                    sendMessage("CivRails: Linked and connected to the API.");
+                                            case CONNECTION_ISSUE ->
+                                                    sendMessage("CivRails: Linked locally, but the last API heartbeat failed. Check your connection or relink if this continues.");
+                                        }
                                         return 1;
                                     })
                             )
