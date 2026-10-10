@@ -9,7 +9,7 @@ public final class CivRailsStatusOverlay {
 
     private static final int HORIZONTAL_PADDING = 2;
     private static final int VERTICAL_PADDING = 2;
-    private static final int TOP_MARGIN = 2;
+    private static final int SCREEN_MARGIN = 4;
     private static final int CORNER_RADIUS = 3;
     private static final float SCALE = 0.9f;
 
@@ -22,9 +22,9 @@ public final class CivRailsStatusOverlay {
                 (graphics, tickCounter) -> {
                     Minecraft client = Minecraft.getInstance();
 
-                    // Keep the overlay visible in-game, but respect Minecraft's
-                    // standard F1 setting that hides the HUD.
-                    if (client.player == null || client.options.hideGui) {
+                    if (!CivRailsHudConfig.isEnabled()
+                            || client.player == null
+                            || client.options.hideGui) {
                         return;
                     }
 
@@ -62,8 +62,22 @@ public final class CivRailsStatusOverlay {
                     int boxWidth = textWidth + HORIZONTAL_PADDING * 2;
                     int boxHeight = client.font.lineHeight + VERTICAL_PADDING * 2;
                     int screenWidth = client.getWindow().getGuiScaledWidth();
-                    int x = (screenWidth - Math.round(boxWidth * SCALE)) / 2;
-                    int y = TOP_MARGIN;
+                    int screenHeight = client.getWindow().getGuiScaledHeight();
+
+                    CivRailsHudConfig.Position position = CivRailsHudConfig.getPosition();
+                    int scaledWidth = Math.round(boxWidth * SCALE);
+                    int scaledHeight = Math.round(boxHeight * SCALE);
+
+                    int x = switch (position.horizontal()) {
+                        case 0 -> SCREEN_MARGIN;
+                        case 1 -> (screenWidth - scaledWidth) / 2;
+                        default -> screenWidth - scaledWidth - SCREEN_MARGIN;
+                    };
+                    int y = switch (position.vertical()) {
+                        case 0 -> SCREEN_MARGIN;
+                        case 1 -> (screenHeight - scaledHeight) / 2;
+                        default -> screenHeight - scaledHeight - SCREEN_MARGIN;
+                    };
 
                     graphics.pose().pushMatrix();
                     graphics.pose().translate((float) x, (float) y);
@@ -104,8 +118,6 @@ public final class CivRailsStatusOverlay {
     ) {
         int actualRadius = Math.min(radius, Math.min(width / 2, height / 2));
 
-        // Draw horizontal strips with progressively smaller ends to create
-        // pixel-style rounded corners without textures or extra dependencies.
         for (int row = 0; row < height; row++) {
             int inset = 0;
 
