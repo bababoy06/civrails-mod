@@ -66,7 +66,8 @@ public final class CivRailsSettingsScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        renderBackground(graphics, mouseX, mouseY, partialTick);
+        // Minecraft renders the screen background before calling render().
+        // Calling renderBackground() here would apply the blur twice and crash.
         super.render(graphics, mouseX, mouseY, partialTick);
         graphics.drawCenteredString(this.font, this.title, this.width / 2, 20, 0xFFFFFFFF);
         graphics.drawCenteredString(
