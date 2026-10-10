@@ -1,4 +1,4 @@
-# CivRails Mod v1.0.2
+# CivRails Mod v1.0.3
 
 ## Setup
 
